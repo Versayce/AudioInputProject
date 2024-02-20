@@ -10,7 +10,8 @@ export default function InputSelection() {
         } catch (error) {
             console.error("Error getting audio stream", error);
         }
-        console.log("Selecting audio source");
+        // Checking to see if our input devices are listed
+        console.log("Listing audio sources:");
         navigator.mediaDevices.enumerateDevices().then((devices) => {
             console.log(devices);
         });
