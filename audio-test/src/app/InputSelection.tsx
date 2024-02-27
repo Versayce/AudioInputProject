@@ -42,6 +42,7 @@ export default function InputSelection() {
                 video: false,
             });
             setStream({ data: streamData });
+            setPermission(true);
         } catch (error) {
             console.error("Error getting audio stream", error);
             alert("Failed to access microphone.");
@@ -59,17 +60,18 @@ export default function InputSelection() {
     }, [stream]); 
     
     return (
-        <div>
+        <div className="flex flex-col items-center">
             {!permission ? (<button type="button" onClick={requestAccess}>Get Input Devices</button>) : null}
-            <select id="inputDevice" onChange={handleInputDeviceChange} className="text-black">
-                <option value="">Select A Device</option>
+            
+            {permission ? <select id="inputDevice" onChange={handleInputDeviceChange} className="text-black w-1/2 overflow-none">
                 {inputDevices.map(device => (
                     <option key={device.deviceId} value={device.deviceId}>
                         {device.label || `Device ${device.deviceId}`}
                     </option>
                 ))}
-            </select>
-            {permission ? (<button type="button" onClick={getInput}>Use Source</button>) : null}
+            </select> : null}
+            {permission ? (<button type="button" onClick={getInput} className="relative">Use Source</button>) : null}
+            
         </div>
     );
 }
